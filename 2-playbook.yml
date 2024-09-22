@@ -1,0 +1,15 @@
+##this is second playbook
+
+
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+
+  tasks:
+    - name: install the latest version of tree tool
+      yum: 
+        name: tree
+        state: latest

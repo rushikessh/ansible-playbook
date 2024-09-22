@@ -1,0 +1,8 @@
+##first playbook
+
+
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes

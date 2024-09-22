@@ -1,0 +1,28 @@
+##this is third playbook
+
+
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+    - name: install latest version of httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: make sure your service is running
+      systemd:
+        name: httpd
+        state: started
+
+    - name: create a file in root's directory
+      shell : echo "httpd server" > /root/index.html
+
+    - name: copy file
+      copy:
+        src: /root/index.html
+        dest: /var/www/html 
+
