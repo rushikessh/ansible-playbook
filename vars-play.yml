@@ -1,0 +1,32 @@
+
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  vars:
+    package_name: httpd
+    src_path: /tmp/index.html
+    dest_path: /var/www/html
+
+  tasks:
+    - name: install latest version of httpd
+      yum:
+        name: "{{ package_name }}"
+        state: latest
+
+    - name: make sure your service is running
+      systemd:
+        name: "{{ package_name }}"
+        state: started
+
+    - name: create a file in root's directory
+      shell : echo "httpd server" > "{{ src_path }}"
+
+    - name: copy file
+      copy:
+        src: "{{ src_path }}"
+        dest: "{{ dest_path }}"
+        remote_src: yes
+

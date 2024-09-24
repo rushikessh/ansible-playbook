@@ -1,0 +1,25 @@
+- hosts: preprod[0]
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+    - name: installing latest version of git
+      yum: 
+        name: git
+        state: latest
+
+- hosts: dev[1]
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  tasks: 
+    - name: installing latest version of maven
+      get_url:
+        url: https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.zip
+        dest: /mnt
+        mode: '0700'
+

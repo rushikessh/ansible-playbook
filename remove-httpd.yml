@@ -1,0 +1,26 @@
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  vars:
+    package_name: httpd
+    src_path: /root/index.html
+    dest_path: /var/www/html
+  
+  tasks:
+    - name: make sure your service is running
+      systemd:
+        name: "{{ package_name }}"
+        state: stopped
+
+    - name: remove latest version of httpd
+      yum:
+        name: "{{package_name}}"
+        state: removed
+
+    - name: delete index file
+      shell: rm -rf /root/index.html
+
+
