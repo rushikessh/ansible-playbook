@@ -1,0 +1,32 @@
+- hosts: preprod
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+  vars:
+    package: httpd
+
+  tasks:
+    - name: uninstall the latest version of httpd
+      yum:
+        name: httpd
+        state: absent
+        autoremove: yes
+      when: package == "httpd"
+
+
+         tasks:
+    - name: install latest version of httpd
+      yum:
+        name: "{{ package_name }}"
+        state: latest
+      when: ansible_facts['os_family']== "redhat"
+
+    # tasks:
+  #   - name: print all available facts
+  #     ansible.builtin.debug
+  #       var: ansible_facts
+
+
+  
