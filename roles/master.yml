@@ -1,0 +1,9 @@
+- hosts: preprod[0]
+  user: root
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+
+  roles:
+    - httpd

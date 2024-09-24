@@ -1,0 +1,12 @@
+
+# tasks file for httpd
+
+- name: install latest version of httpd
+  yum:
+    name: "{{ package_name }}"
+    state: latest
+  notify: make sure service is running
+
+- name: create a file in root's directory
+  shell : echo "httpd server" > "{{ src_path }}"
+  notify: copy file

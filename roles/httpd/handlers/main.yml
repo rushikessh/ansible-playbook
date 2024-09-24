@@ -1,0 +1,14 @@
+
+# handlers file for httpd
+
+
+- name: make sure service is running
+  systemd:
+    name: "{{ package_name }}"
+    enabled: yes
+
+- name: copy file
+  copy:
+    src: "{{ src_path }}"
+    dest: "{{ dest_path}}"
+    remote_src: yes
